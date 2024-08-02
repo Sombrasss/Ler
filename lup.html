@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Slider</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: black; /* Para garantir que a mensagem se destaque */
+        }
+        .slider {
+            width: 100%;
+            max-width: 600px;
+            position: relative;
+            overflow: hidden;
+        }
+        .slider img {
+            width: 100%;
+            display: none;
+        }
+        .slider img.active {
+            display: block;
+        }
+        .instruction {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 18px;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 5px;
+            animation: blink 4s infinite;
+            z-index: 10; /* Certifique-se de que a mensagem fique acima das imagens */
+        }
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            0%, 100% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="slider" id="slider">
+        <div class="instruction" id="instruction">Deslize para baixo para ver outras imagens</div>
+        <img src="lup01.jpg" class="active" alt="Image 1">
+        <img src="lup02.jpg" alt="Image 2">
+        <img src="lup03.jpg" alt="Image 3">
+        <img src="lup04.jpg" alt="Image 4">
+        <img src="lup05.jpg" alt="Image 5">
+        <img src="lup06.jpg" alt="Image 6">
+        <img src="lup07.jpg" alt="Image 7">
+        <img src="lup08.jpg" alt="Image 8">
+        <img src="lup09.jpg" alt="Image 9">
+        <img src="lup10.jpg" alt="Image 10">
+        <img src="lup11.jpg" alt="Image 11">
+        <img src="lup12.jpg" alt="Image 12">
+        <img src="lup13.jpg" alt="Image 13">
+        <img src="lup14.jpg" alt="Image 14">
+        <img src="lup15.jpg" alt="Image 15">
+        <img src="lup16.jpg" alt="Image 16">
+        <img src="lup17.jpg" alt="Image 17">
+        <img src="lup18.jpg" alt="Image 18">
+        <img src="lup19.jpg" alt="Image 19">
+        <img src="lup20.jpg" alt="Image 20">
+        <img src="lup21.jpg" alt="Image 21">
+        <img src="lup22.jpg" alt="Image 22">
+        <img src="lup23.jpg" alt="Image 23">
+        <img src="lup24.jpg" alt="Image 24">
+        <img src="lup25.jpg" alt="Image 25">
+        <img src="lup26.jpg" alt="Image 26">
+        <img src="lup27.jpg" alt="Image 27">
+        <img src="lup28.jpg" alt="Image 28">
+        <img src="lup29.jpg" alt="Image 29">
+        <img src="lup30.jpg" alt="Image 30">
+        <img src="lup31.jpg" alt="Image 31">
+        <img src="lup32.jpg" alt="Image 32">
+        <img src="lup33.jpg" alt="Image 33">
+    </div>
+
+    <script>
+        let currentIndex = 0;
+        const images = document.querySelectorAll('#slider img');
+        const instruction = document.getElementById('instruction');
+
+        function showImage(index) {
+            images.forEach((img, i) => {
+                img.classList.toggle('active', i === index);
+            });
+        }
+
+        function handleTouchStart(event) {
+            yStart = event.touches[0].clientY;
+        }
+
+        function handleTouchMove(event) {
+            if (!yStart) {
+                return;
+            }
+
+            const yEnd = event.touches[0].clientY;
+            const yDiff = yStart - yEnd;
+
+            if (Math.abs(yDiff) > 50) {
+                if (yDiff > 0) {
+                    // Swipe up
+                    currentIndex = (currentIndex + 1) % images.length;
+                } else {
+                    // Swipe down
+                    currentIndex = (currentIndex - 1 + images.length) % images.length;
+                }
+                showImage(currentIndex);
+                yStart = null;
+                hideInstruction();
+            }
+        }
+
+        function hideInstruction() {
+            instruction.style.display = 'none';
+        }
+
+        let yStart = null;
+        const slider = document.getElementById('slider');
+        slider.addEventListener('touchstart', handleTouchStart, false);
+        slider.addEventListener('touchmove', handleTouchMove, false);
+    </script>
+</body>
+</html>
